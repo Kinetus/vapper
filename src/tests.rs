@@ -13,16 +13,15 @@ impl API for MockAPI {
     fn method<T: serde::de::DeserializeOwned>(
         &self,
         _method: Method,
-    ) -> Result<VKResult<T>, Self::Error> {
-        Ok(VKResult::Response(
+    ) -> Result<T, Self::Error> {
+        Ok(
             serde_json::from_value(json!(
                 [{
                     "id": 5,
                     "first_name": "hello"
                 }]
-            ))
-            .unwrap(),
-        ))
+            )
+        ).unwrap())
     }
 }
 

@@ -4,7 +4,7 @@ use vk_method::{Method, Params};
 pub trait API {
     type Error;
 
-    fn method<T>(&self, method: Method) -> Result<VKResult<T>, Self::Error>
+    fn method<T>(&self, method: Method) -> Result<T, Self::Error>
     where for<'de>
         T: serde::Deserialize<'de>;
 
@@ -45,15 +45,15 @@ impl<'a, A: API> UsersGetBuilder<'a, A> {
         self
     }
 
-    pub fn send(self) -> Result<VKResult<Vec<User>>, A::Error> {
+    pub fn send(self) -> Result<Vec<User>, A::Error> {
         let mut params = Params::new();
 
         if let Some(value) = self.user_id {
-            params.push("user_id", serde_json::to_value(value).unwrap());
+            params.insert("user_id", value);
         }
 
         if let Some(value) = self.user_ids {
-            params.push("user_id", serde_json::to_value(value).unwrap());
+            params.insert("user_id", value);
         }
 
         self.api.method(
