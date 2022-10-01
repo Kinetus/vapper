@@ -63,7 +63,7 @@ impl<'a, A: API> UsersGetBuilder<'a, A> {
 }
 
 #[allow(dead_code)]
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize, Debug, PartialEq)]
 pub struct User {
     id: i32,
     first_name: String

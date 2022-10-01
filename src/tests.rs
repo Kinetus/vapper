@@ -18,7 +18,7 @@ impl API for MockAPI {
             serde_json::from_value(json!(
                 [{
                     "id": 5,
-                    "first_name": "hello"
+                    "first_name": "durov"
                 }]
             )
         ).unwrap())
@@ -29,7 +29,8 @@ impl API for MockAPI {
 fn test() {
     let api = MockAPI;
 
-    let a = api.users_get().user_id(1).user_ids(vec![4,5]).send();
-
-    println!("{:?}", a);
+    assert_eq!(
+        api.users_get().user_id(1).user_ids(vec![4,5]).send().unwrap(),
+        vec![User {id: 5, first_name: "durov".to_string()}]
+    );
 }
